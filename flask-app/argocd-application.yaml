@@ -1,0 +1,29 @@
+#argocd-application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: flask-todo
+  namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: "flask-app=nasirbloch323/helm-app"
+    argocd-image-updater.argoproj.io/flask-todo.update-strategy: "semver"
+    argocd-image-updater.argoproj.io/flask-todo.allow-tags: "regexp:^v?\\d+\\.\\d+\\.\\d+$"
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/git-branch: main
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/umair1012/flask-todo-argo.git
+    path: .
+    targetRevision: main
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
