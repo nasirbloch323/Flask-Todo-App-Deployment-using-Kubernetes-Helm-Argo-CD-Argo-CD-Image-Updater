@@ -14,7 +14,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/nasirbloch323/Flask-Todo-App-Deployment-using-Kubernetes-Helm-Argo-CD-Argo-CD-Image-Updater.git
-    path: .
+    path: flask-app
     targetRevision: argocd
    helm:
       valueFiles:
