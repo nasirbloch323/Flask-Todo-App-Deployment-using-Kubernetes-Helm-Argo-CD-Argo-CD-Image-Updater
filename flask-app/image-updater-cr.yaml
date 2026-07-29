@@ -1,0 +1,17 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: default
+  namespace: argocd
+spec:
+  # Namespace where your Argo CD Applications exist
+  namespace: argocd
+
+  # Application references: which Argo CD apps to watch
+  applicationRefs:
+    - namePattern: "*"   # Watch all apps in the argocd namespace
+      images:
+        - alias: flask-todo
+          # Track any tag starting with "v" (v1.0.0, v1.0.1, v1.1.0, etc.)
+          imageName: misacademy/flask-todo:v*
+
